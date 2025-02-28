@@ -1,0 +1,48 @@
+body {
+    background-color: black;
+}
+
+
+.button {
+    background-color: rgba(192, 192, 192, 0.307);
+    font-weight: bold;
+    font-size: 19px;
+    color: white;
+    width: 66px;
+    padding: 20px;
+    margin: 0 2px;
+    border: 2px solid black;
+    border-radius: 9px; 
+    cursor: pointer;
+}
+
+.nums {
+    color: white;
+}
+
+.operators {
+    color: rgb(255, 136, 0);
+}
+
+.equal{
+    width: 140px;
+    background-color: rgb(255, 136, 0);
+}
+
+.row {
+    margin: 5px 0;
+}
+
+.row input {
+    width: 258px;
+    height: 35px;
+    font-size: 19px;
+    padding: 9px 14px;
+    border: 2px solid black;
+    border-radius: 9px;
+    text-align: right;
+    margin: 0 8px;
+    background: black;
+    font-weight: bold;
+    color: white;
+}
