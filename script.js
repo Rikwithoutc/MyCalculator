@@ -27,7 +27,11 @@ Array.from(buttons).forEach((button) => {
             string = string.slice(0, -1);
             inputField.value = string;
 
-        } else {
+        } else if (value === "%") { 
+            string += /100;
+            inputField.value = string;
+            
+        }else {
             if ("+-*/".includes(value) && "+-*/".includes(string.slice(-1))) {
                 return; // Prevent consecutive operators
             }
