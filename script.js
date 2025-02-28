@@ -1,64 +1,76 @@
 let string = "";
 
 let buttons = document.querySelectorAll(".button");
+let inputField = document.querySelector(".input");
 
-// console.log(buttons);
+// Button Click Event
 Array.from(buttons).forEach((button) => {
+    button.addEventListener("click", (e) => {
+        let value = e.target.innerHTML;
 
-    button.addEventListener('click', (e) => {
-        // console.log(e.target);
-        if (e.target.innerHTML == "=") {
+        if (value === "=") {
             try {
                 string = Function('"use strict"; return (' + string + ')')();
+                if (string !== "Error") {
+                    string = String(string);
+                }
             } catch {
                 string = "Error";
             }
-            document.querySelector('.input').value = string;
-            string = "";
-        
-        }else if (e.target.innerHTML == "C") {
-            string = "";
-            document.querySelector('.input').value = string
+            inputField.value = string;
 
-        }else if (e.target.innerHTML == "CE"){
-            string = string.slice(0,-1);
-            document.querySelector('.input').value = string;
-        }else {
-            if ("+-*/".includes(e.target.innerHTML) && "+-*/".includes(string.slice(-1))) {
-                return; 
+        } else if (value === "C") {
+            string = "";
+            inputField.value = string;
+
+        } else if (value === "CE") {
+            string = string.slice(0, -1);
+            inputField.value = string;
+
+        } else {
+            if ("+-*/".includes(value) && "+-*/".includes(string.slice(-1))) {
+                return; // Prevent consecutive operators
             }
-            string += e.target.innerHTML;
-            document.querySelector('.input').value = string;
+            if (value === "." && /\.\d*$/.test(string)) {
+                return; // Prevent multiple decimal points
+            }
+            string += value;
+            inputField.value = string;
         }
-    })
-})
+    });
+});
 
-document.addEventListener('keydown', (e) => {
-    if (e.key == "Enter" || e.key == "=") {
+// Keyboard Input Event
+document.addEventListener("keydown", (e) => {
+    let key = e.key;
+
+    if (key === "Enter" || key === "=") {
         try {
             string = Function('"use strict"; return (' + string + ')')();
+            if (string !== "Error") {
+                string = String(string);
+            }
         } catch {
             string = "Error";
         }
-        document.querySelector('.input').value = string;
+        inputField.value = string;
+
+    } else if (key === "Backspace") {
+        string = string.slice(0, -1);
+        inputField.value = string;
+
+    } else if (key === "Delete") {
         string = "";
+        inputField.value = string;
 
-    } else if (e.key == "Backspace") {
-        string = string.slice(0,-1);
-        document.querySelector('.input').value = string;
-
-    } else if (e.key == "Delete") {
-        string = "";
-        document.querySelector('.input').value = string;
-
-    } else if (/\d/.test(e.key) || "+-*/.".includes(e.key)) {
-        if ("+-*/".includes(e.key) && "+-*/".includes(string.slice(-1))) {
-            return; 
+    } else if (/\d/.test(key) || "+-*/.".includes(key)) {
+        if ("+-*/".includes(key) && "+-*/".includes(string.slice(-1))) {
+            return;  // Prevent consecutive operators
         }
-        string += e.key;
-        document.querySelector('.input').value = string;
-
-    } else {
-        return;
+        if (key === "." && /\.\d*$/.test(string)) {
+            return; // Prevent multiple decimal points
+        }
+        string += key;
+        inputField.value = string;
     }
-})
+});
