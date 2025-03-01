@@ -28,7 +28,9 @@ Array.from(buttons).forEach((button) => {
             inputField.value = string;
 
         } else if (value === "%") { 
-            string += /100;
+            if (string.length > 0) {
+                string = String(eval(string + "/100"));
+            }
             inputField.value = string;
             
         }else {
@@ -66,6 +68,10 @@ document.addEventListener("keydown", (e) => {
     } else if (key === "Delete") {
         string = "";
         inputField.value = string;
+    } else if (key === "%") {
+        if (string.length > 0) {
+            string = String(eval(string + "/100"));
+        }
 
     } else if (/\d/.test(key) || "+-*/.".includes(key)) {
         if ("+-*/".includes(key) && "+-*/".includes(string.slice(-1))) {
